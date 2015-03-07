@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Geocoding3</string>
-    <string name="edit_message">Enter a message</string>
+    <string name="edit_message">Enter your destination</string>
     <string name="button_send">Search</string>
     <string name="button_getWeather">Weather Info</string>
     <string name="action_settings">Settings</string>
@@ -10,6 +10,7 @@
     <string name="title_activity_search">Search Result</string>
     <string name="hello_world">Hello world!</string>
     <string name="button_navigate">Navigate</string>
+    <string name="button_streetView">Stree View</string>
     <string name="title_activity_display_weather">DisplayWeatherActivity</string>
 
 </resources>

@@ -22,6 +22,12 @@
             android:text="@string/button_navigate"
             android:onClick="startNavigate"/>
         <Button
+            android:id="@+id/streetView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_streetView"
+            android:onClick="streetView"/>
+        <Button
             android:id="@+id/weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

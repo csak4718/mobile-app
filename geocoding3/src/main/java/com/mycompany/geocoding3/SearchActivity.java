@@ -29,6 +29,7 @@ public class SearchActivity extends Activity implements OnMapReadyCallback {
     double longitude;
     ArrayList<Attraction> attractions;
     Weather weather;
+    List<Address> addresses;
     public final static String EXTRA_MESSAGE = "com.mycompany.geocoding3.MESSAGE";
 
     @Override
@@ -37,7 +38,6 @@ public class SearchActivity extends Activity implements OnMapReadyCallback {
         setContentView(R.layout.activity_search);
 
         Geocoder geocoder = new Geocoder(this, Locale.US);
-        List<Address> addresses;
 
 
         // Get the message from the intent
@@ -62,8 +62,8 @@ public class SearchActivity extends Activity implements OnMapReadyCallback {
 
 
             TextView textView = (TextView) findViewById(R.id.txv);
-            textView.setTextSize(25);
-            textView.setText("Latitude: " + String.valueOf(latitude) + "\n"
+            textView.setTextSize(20);
+            textView.setText("Your destination: "+message+"\n"+"Latitude: " + String.valueOf(latitude) + "\n"
                     + "Longitude: " + String.valueOf(longitude)); // Show Latitude & Longitude of searching location
 
             if (attractions.size()==0) textView.setText("Back to previous page to enter correct address!");
@@ -103,18 +103,21 @@ public class SearchActivity extends Activity implements OnMapReadyCallback {
         map.setMyLocationEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(addr, 13));
 
+        map.setTrafficEnabled(true);
+
         map.addMarker(new MarkerOptions()
-                .title("Location Name") // TO DO
-                .snippet("URL") // TO DO
+                .title("Your destination")
+//                .snippet("URL") // TO DO
                 .position(addr)); // Marker of searching location
+
 
 
         // Add markers to locations retrieved from Yelp
         for (int i=0; i< attractions.size(); i++){
 
             map.addMarker(new MarkerOptions()
-                    .title(attractions.get(i).getName()) // TO DO
-                    .snippet("URL") // TO DO
+                    .title(attractions.get(i).getName())
+                    .snippet( "Rating: "+String.valueOf(attractions.get(i).getRating()) )
                     .position( new LatLng(attractions.get(i).getLatitude(), attractions.get(i).getLongitude()) )
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         }
@@ -136,5 +139,13 @@ public class SearchActivity extends Activity implements OnMapReadyCallback {
         Intent intent =new Intent(this,DisplayWeatherActivity.class);
         intent.putExtra(EXTRA_MESSAGE, weather.getSummary());
         startActivity(intent);
+    }
+
+    public void streetView(View view){
+        // Displays an image of the Swiss Alps
+        Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+String.valueOf(latitude)+","+String.valueOf(longitude));
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
     }
 }
